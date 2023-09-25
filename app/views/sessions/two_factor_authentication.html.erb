@@ -1,0 +1,35 @@
+<div class="auth">
+  <h3>Two Factor Authentication</h3>
+
+  <%= form_tag authenticate_session_path(@user), { method: :post } do %>
+      <div class="form-group auth-form">
+        <%= label_tag :otp, "One Time Password" %>
+        <%= text_field_tag :otp, nil, id: "otp", placeholder: "Please Enter OTP", class: "form-control text-center", autocomplete: :off, maxlength: 6 %>
+
+        <%= submit_tag "Authenticate", id: "authenticate_otp_btn", disabled_with: "Authenticating..." %>
+      </div>
+  <% end %>
+
+  <% if @user.qr_option %>
+    <table class="qr ">
+      <% qr = RQRCode::QRCode.new(@user.provisioning_uri("Expenses")) %>
+
+      <% qr.modules.each_index do |x| %>
+        <tr>
+          <% qr.modules.each_index do |y| %>
+            <% if qr.qrcode.checked?(x,y) %>
+              <td class="black"/>
+            <% else %>
+              <td class="white"/>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+
+    <div id="qr-note">
+      <h5 class="mt-2">This QR-Code is given to setup OTP Environment.</h5>
+      <p class="text-dark small required"><strong>Note: </strong>This is for the new user who is trying to login first time to this site. So, please add this QR-Code detail to your authenticator app because this will not be available from next time.</p>
+    </div>
+  <% end %>
+</div>

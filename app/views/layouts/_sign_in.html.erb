@@ -1,0 +1,9 @@
+<div class="sign">
+  <%= image_tag("google-icon.png") %>
+  <%= link_to t('.signingoogle'), "/auth/google_oauth2", method: :post %>
+  <% flash.each do |key, value| %>
+    <div class="<%= flash_class(key) %> ">
+      <h4 align="center"><%= value %></h4>
+    </div>
+  <% end %>
+</div>

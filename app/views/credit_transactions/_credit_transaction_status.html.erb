@@ -1,0 +1,17 @@
+<div id="credit_transaction-<%= @credit_transaction.id %>-status">
+  <% unless @credit_transaction.verified? %>
+    <p class="transaction-controls">
+      <%= link_to '', edit_transaction_path(@credit_transaction), title: "Edit", class: "fa fa-pencil-square-o fa-2x" %>
+      <%= link_to '', @credit_transaction, method: :delete, data: { confirm: t(:sure, name: "transaction") }, title: "Delete", class: "fa fa-trash fa-2x" %>
+    </p>
+    Pending for approval <br/>
+  <% end %>
+  <% if @credit_transaction.approved_by.present? %>
+    <span class="font-weight-bold"> <%= t('.approved_by') %></span> <%= @credit_transaction.approved_by.name %> <span class="font-weight-bold"><%= t('.preposition') %></span> <%= l(@credit_transaction.approved_at, format: :time_format) %>
+  <% elsif @credit_transaction.rejection_reason.present? %>
+    <span class="font-weight-bold"> <%= t('.rejected_by') %></span> <%= @credit_transaction.rejected_by.name %> <span class="font-weight-bold"><%= t('.preposition') %></span> <%= l(@credit_transaction.rejected_at, format: :time_format) %><br/> <span class="font-weight-bold"><%= t('.reason') %></span> <%= @credit_transaction.rejection_reason %>
+  <% else %>
+    <%= link_to(t('.approve'), approve_credit_transaction_path(@credit_transaction), remote:  true, method: :put) %> /
+    <%= link_to(t('.reject'), reject_transaction_credit_transaction_path(@credit_transaction), data: { remote_popup: true })%>
+  <% end %>
+</div>

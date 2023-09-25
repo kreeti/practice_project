@@ -1,0 +1,49 @@
+name: CI - Expenses
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Start Ubuntu MySQL (SUDO)
+        run: |
+          sudo systemctl enable mysql.service
+          sudo systemctl start mysql.service
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: "Install chromedriver"
+        run: |
+          wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/bin/chromedriver
+          sudo chown root:root /usr/bin/chromedriver
+          sudo chmod +x /usr/bin/chromedriver
+
+      - name: "Database setup"
+        run: |
+          cp ./config/secrets.yml.sample ./config/secrets.yml
+          cp ./config/database.yml.sample ./config/database.yml
+          bundle exec rake db:create --trace
+          bundle exec rake db:schema:load --trace
+
+      - name: "Run tests"
+        run: |
+          bundle exec rspec --format progress
+
+      - name: Upload coverage results
+        uses: actions/upload-artifact@master
+        with:
+          name: coverage-report
+          path: coverage

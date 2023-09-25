@@ -1,0 +1,63 @@
+name: CD - Expenses
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    if: ${{ github.ref == 'refs/heads/master' }}
+    runs-on: ubuntu-20.04
+    steps:
+      - name:
+        if: ${{ github.ref == 'refs/heads/master' }}
+        run: |
+          echo "ECS_SERVICE_NAME=expenses-webapp" >> $GITHUB_ENV
+          echo "ECS_CLUSTER=expenses-cluster" >> $GITHUB_ENV
+          echo "ECS_CONTAINER_NAME=app-container" >> $GITHUB_ENV
+          echo "ECS_TASKDEFINITION=expenses-webapp" >> $GITHUB_ENV
+          echo "ECR_REPOSITORY=expenses-repo" >> $GITHUB_ENV
+
+      - uses: actions/checkout@v2
+
+      - name:
+        if: ${{ github.ref == 'refs/heads/master' }}
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: "Build, tag, and push image to Amazon ECR"
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition $ECS_TASKDEFINITION --query taskDefinition > task-definition.json
+
+      - name: Render Amazon ECS task definition
+        id: render-web-container
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: ${{ env.ECS_CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy to Amazon ECS service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-web-container.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE_NAME }}
+          cluster: ${{ env.ECS_CLUSTER }}
+#          wait-for-service-stability: true

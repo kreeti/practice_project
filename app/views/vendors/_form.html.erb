@@ -1,0 +1,68 @@
+<div class="form-group row">
+  <div class="col-md-3 control-label">
+    <%= f.label :name, t('.name'), class:"required" %>
+  </div>
+  <div class="col-md-9">
+    <%= f.text_field :name , class: "form-control", required: "true",
+    autocomplete: :off %>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-md-3 col-form-label">
+    <%= f.label :street, t(:street) %>
+  </div>
+  <div class="col-md-9">
+    <%= f.text_area :street , class: "form-control", autocomplete: :off %>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-md-3 col-form-label">
+    <%= f.label :street2, t(:street2) %>
+  </div>
+  <div class="col-md-9">
+    <%= f.text_area :street2 , class: "form-control", autocomplete: :off %>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-md-3 col-form-label">
+    <%= f.label :city, t(:city) %>
+  </div>
+  <div class="col-md-9">
+    <%= f.text_field :city , class: "form-control", autocomplete: :off %>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-md-3 col-form-label">
+    <%= f.label :state, t(:state) %>
+  </div>
+  <div class="col-md-9">
+    <%= f.text_field :state , class: "form-control", autocomplete: :off %>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-md-3 col-form-label">
+    <%= f.label :country, t(:country) %>
+  </div>
+  <div class="col-md-9">
+    <%= f.text_field :country , class: "form-control", autocomplete: :off %>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-md-3 col-form-label"><%= f.label :gst_no, t(:gst_no) %></div>
+  <div class="col-md-9">
+    <%= f.text_field :gst_no , class: "form-control", autocomplete: :off %>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-md-3 col-form-label"><%= f.label :pan_no, t(:pan_no) %></div>
+  <div class="col-md-9">
+    <%= f.text_field :pan_no , class: "form-control", autocomplete: :off %>
+  </div>
+</div>

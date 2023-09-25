@@ -1,0 +1,22 @@
+<tr id="credit_transaction_<%= credit_transaction.id %>">
+  <td class="id-width"><%= link_to credit_transaction.id, credit_transaction_path(credit_transaction) %></td>
+  <td class="date-width">
+    <%= l(credit_transaction.transaction_on) if credit_transaction.transaction_on %><br/>
+    <% if credit_transaction.approved_by.present? %>
+      <%= t('.approved') %>
+    <% elsif credit_transaction.rejection_reason.present?  %>
+      <%= t('.rejected') %>
+    <% else %>
+      <%= link_to(t('.approve'), approve_credit_transaction_path(credit_transaction), method: :put, remote: true) %>/
+      <%= link_to(t('.reject'), reject_transaction_credit_transaction_path(credit_transaction), data: { remote_popup: true }) %>
+    <% end %>
+  </td>
+  <td class="user-width"><%= credit_transaction.beneficiary_user.try(:name_or_email) %></td>
+  <td class="amount-width text-right"><%= number_to_currency(credit_transaction.amount, unit:" ") %></td>
+  <td class="d-flex pull-right">
+    <% unless credit_transaction.verified? %>
+      <%= link_to '', credit_transaction, method: :delete, class: "fa fa-trash fa-2x float-right", title: "Delete", data: { confirm: t(:sure, name: "credit transaction") } %>
+      <%= link_to '', edit_credit_transaction_path(credit_transaction), method: 'get', title: "Edit", class: "fa fa-pencil-square-o fa-2x float-right" %>
+    <% end %>
+  </td>
+</tr>

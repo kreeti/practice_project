@@ -1,0 +1,13 @@
+en:
+  users:
+    
+    index:
+      user: "Users"
+      newuser: "Add"
+      email: "Email"
+      destroy: "Destroy"
+
+    form:
+      prohibit: "prohibit this user from being saved:"
+      name: "Name: "
+      email: "Email: "

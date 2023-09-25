@@ -1,0 +1,13 @@
+<div class="transaction-form">
+  <h2 align="center"><%= t(:add, name: "credit transaction")  %></h2>
+  <%= form_for @credit_transaction do |f| %>
+    <%= render 'shared/errors', object: f.object %>
+    <%= render 'form', f: f %>
+    <div class="form-group">
+      <div class="text-right">
+        <%= f.submit t(:create), name: 'create',  class: "btn btn-primary"  %>
+        <%= link_to t(:cancel), :back, class: "btn btn-light btn-outline-dark" %>
+      </div>
+    </div>
+  <% end %>
+</div>

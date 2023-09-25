@@ -1,0 +1,7 @@
+<% if URI(request.referer).path == '/transactions' %>
+  $("tr#credit_transaction_<%= @credit_transaction.id %>").replaceWith("<%= j render @credit_transaction %>");
+<% else %>
+  $("p#credit_transaction-<%= @credit_transaction.id %>-status").replaceWith("<%= j render 'credit_transaction_status' %>");
+<% end %>
+
+$("#approve").html('<h4 class="alert alert-success text-center">Transaction approved successfully</h4>');

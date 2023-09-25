@@ -1,0 +1,5 @@
+<% if current_user.present? %>
+  <div class="sign">
+   <%= t('.welcome') %> <strong><%= current_user.name %></strong> <%= t('.to') %> <strong><%= t('.expensetracker') %></strong>
+  </div>
+<% end %>

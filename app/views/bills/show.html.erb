@@ -1,0 +1,108 @@
+<h4><%= link_to ' Back', bills_path, class: "mx-5 fa fa-arrow-left" %></h4>
+
+<h1 class="m-4 px-4 font-weight-bold">Bill Details</h1>
+
+<div class="card mx-5">
+  <div class="card-header h2 px-5">
+    Bill No - <%= @bill.id %>
+  </div>
+
+  <div class="card-body row px-5">
+    <div class="details-row col-lg-6 my-2">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 text-info h5">
+          <b><label>Vendor:</label></b>
+        </div>
+        <div class="col-xs-12 col-sm-6 h5">
+          <%= @bill.vendor.name %>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-row col-lg-6 my-2">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 text-info h5">
+          <b><label>Total CGST:</label></b>
+        </div>
+        <div class="col-xs-12 col-sm-6 h5">
+          <%= @bill.total_cgst %>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-row col-lg-6 my-2">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 text-info h5">
+          <b><label>Date:</label></b>
+        </div>
+        <div class="col-xs-12 col-sm-6 h5">
+          <%= @bill.date %>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-row col-lg-6 my-2">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 text-info h5">
+          <b><label>Total SGST:</label></b>
+        </div>
+        <div class="col-xs-12 col-sm-6 h5">
+          <%= @bill.total_sgst %>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-row col-lg-6 my-2">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 text-info h5">
+          <b><label>Reference Number:</label></b>
+        </div>
+        <div class="col-xs-12 col-sm-6 h5">
+          <%= @bill.ref_no %>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-row col-lg-6 my-2">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 text-info h5">
+          <b><label>Total IGST:</label></b>
+        </div>
+        <div class="col-xs-12 col-sm-6 h5">
+          <%= @bill.total_igst %>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-row col-lg-6 my-2">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 text-info h5">
+          <b><label>Attachment:</label></b>
+        </div>
+        <div class="col-xs-12 col-sm-6 h5">
+          <% if @bill.document.exists? %>
+            <%= link_to @bill.document_file_name, @bill.document.url, target: "_blank" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="details-row col-lg-6 my-2">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 text-info h5">
+          <b><label>Total Amount:</label></b>
+        </div>
+        <div class="col-xs-12 col-sm-6 h5">
+          <%= @bill.total_amount %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="text-center my-4">
+  <%= link_to '', edit_bill_path(@bill), title: "Edit", class: "fa fa-pencil-square-o fa-2x" %>
+</div>
+
+<%= render "all_bill_items" if @bill.bill_items.present? %>

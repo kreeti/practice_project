@@ -1,0 +1,50 @@
+== README
+
+This README would normally document whatever steps are necessary to get the
+application up and running.
+
+Things you may want to cover:
+
+* Ruby version
+
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
+=== Enable https in development/test
+if you don't have ssl certificate you can create self-assigned ssl-key for development/testing purpose.
+==== Command to create self-assigned ssl-certificate
+
+> openssl req -newkey rsa:4096 \
+>             -x509 \
+>             -sha256 \
+>             -days 3650 \
+>             -nodes \
+>             -out example.crt \
+>             -keyout example.key
+
+[for more information](https://linuxize.com/post/creating-a-self-signed-ssl-certificate/)
+
+In `config/environments/development.rb` add a line:
+> config.force_ssl = true
+
+==== start `rails server` as:
+> rails s -b "ssl://localhost:3000?key=path_of_example.key&cert=path_of_example.crt"
+
+or
+
+> puma -b "ssl://localhost:3000?key=path_of_example.key&cert=path_of_example.crt"
+
+Please feel free to use a different markup language if you do not plan to run
+<tt>rake doc:app</tt>.

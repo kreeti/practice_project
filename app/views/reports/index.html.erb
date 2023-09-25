@@ -1,0 +1,9 @@
+<div class="container">
+  <h1 class="chart-heading">Transaction Chart For The Year <%= params[:year] || Time.now.year %> </h1>
+
+  <div>
+    <%= select_tag(:year, options_for_select(2010..Time.now.year, params[:year] || Time.now.year), class: "chart-year-selector", data: { remote: true, url: reports_path }) %>
+  </div>
+
+  <div class="show-transaction-chart"><%= render 'transaction_chart' %></div>
+</div>

@@ -1,0 +1,13 @@
+<div class="transaction-form">
+  <h2 align="center"><%= t(:edit, name: "Credit Transaction") %></h2>
+  <%= form_for @credit_transaction  do |f| %>
+    <%= render 'shared/errors', object: f.object %>
+    <%= render 'form', f: f %>
+    <div class="form-group">
+      <div class="text-right">
+        <%= link_to t(:cancel), :back, class: "btn btn-light btn-outline-dark" %>
+        <%= f.submit t(:update), class: "btn btn-primary" %>
+     </div>
+    </div>
+  <% end %>
+</div>

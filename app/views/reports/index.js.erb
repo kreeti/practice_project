@@ -1,0 +1,3 @@
+$(".show-transaction-chart").html("<%= j render 'transaction_chart' %>");
+$(".chart-heading").html("Transaction Chart For The Year <%= params[:year] %>");
+TransactionChart.displayChart();
