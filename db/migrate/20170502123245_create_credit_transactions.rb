@@ -1,10 +1,10 @@
-class CreateCreditTransactions < ActiveRecord::Migration
+class CreateCreditTransactions < ActiveRecord::Migration[7.0]
   def up
     create_table :credit_transactions do |t|
       t.integer     :amount,  null: false
-      t.belongs_to  :user, foreign_key: true, null: false
-      t.integer     :beneficiary_user_id, null: false
-      t.foreign_key :users, column: :beneficiary_user_id
+      t.belongs_to  :user, foreign_key: true, null: false, on_delete: :cascade
+      t.bigint     :beneficiary_user_id, null: false
+      t.foreign_key :users, column: :beneficiary_user_id, on_delete: :cascade
 
       t.timestamps
     end

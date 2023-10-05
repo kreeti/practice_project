@@ -1,12 +1,10 @@
-class CreateTransactions < ActiveRecord::Migration
+class CreateTransactions < ActiveRecord::Migration[7.0]
   def change
     create_table :transactions do |t|
       t.string :title
       t.datetime :date, null: false
       t.decimal :amount, null: false
       t.text :description
-      t.integer :user_id
-      t.integer :account_id
       t.integer :approved_by
       t.datetime :approved_at
       t.integer :rejected_by

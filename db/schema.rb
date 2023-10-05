@@ -11,21 +11,21 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_03_29_080021) do
-  create_table "accounts", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+  create_table "accounts", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "active", default: true, null: false
   end
 
-  create_table "attachments", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
-    t.integer "transaction_id", null: false
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+  create_table "attachments", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "transaction_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "document_file_name"
     t.string "document_content_type"
-    t.integer "document_file_size"
-    t.datetime "document_updated_at", precision: nil
+    t.bigint "document_file_size"
+    t.datetime "document_updated_at"
     t.index ["transaction_id"], name: "index_attachments_on_transaction_id"
   end
 
@@ -61,50 +61,50 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_29_080021) do
     t.index ["vendor_id"], name: "index_bills_on_vendor_id"
   end
 
-  create_table "credit_transactions", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+  create_table "credit_transactions", charset: "utf8mb3", force: :cascade do |t|
     t.integer "amount", null: false
-    t.integer "user_id", null: false
-    t.integer "beneficiary_user_id", null: false
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
+    t.bigint "user_id", null: false
+    t.bigint "beneficiary_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.date "transaction_on", null: false
-    t.integer "approved_by_id"
-    t.integer "rejected_by_id"
-    t.datetime "approved_at", precision: nil
-    t.datetime "rejected_at", precision: nil
+    t.bigint "approved_by_id"
+    t.bigint "rejected_by_id"
+    t.datetime "approved_at"
+    t.datetime "rejected_at"
     t.string "rejection_reason"
     t.index ["approved_by_id"], name: "fk_rails_609d1d6691"
     t.index ["beneficiary_user_id"], name: "index_credit_transactions_on_beneficiary_user_id"
     t.index ["rejected_by_id"], name: "fk_rails_f5336fd0bc"
-    t.index ["user_id"], name: "fk_rails_db0c649885"
+    t.index ["user_id"], name: "index_credit_transactions_on_user_id"
   end
 
-  create_table "transactions", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+  create_table "transactions", charset: "utf8mb3", force: :cascade do |t|
     t.date "date", null: false
     t.decimal "amount", precision: 8, scale: 2, null: false
     t.text "description"
-    t.integer "user_id", null: false
-    t.integer "account_id", null: false
     t.integer "approved_by"
-    t.datetime "approved_at", precision: nil
+    t.datetime "approved_at"
     t.integer "rejected_by"
-    t.datetime "rejected_at", precision: nil
+    t.datetime "rejected_at"
     t.string "rejection_reason"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.bigint "account_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_transactions_on_account_id"
     t.index ["user_id"], name: "index_transactions_on_user_id"
   end
 
-  create_table "users", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
+  create_table "users", charset: "utf8mb3", force: :cascade do |t|
     t.string "uid"
     t.string "name"
     t.string "email", null: false
     t.string "otp_secret_key"
     t.boolean "qr_option", default: true
     t.string "google_oauth_token"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean "admin", default: false
     t.boolean "is_active", default: true
   end
@@ -125,10 +125,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_29_080021) do
   add_foreign_key "attachments", "transactions"
   add_foreign_key "bill_items", "bills"
   add_foreign_key "bills", "vendors"
+  add_foreign_key "credit_transactions", "users"
   add_foreign_key "credit_transactions", "users", column: "approved_by_id"
   add_foreign_key "credit_transactions", "users", column: "beneficiary_user_id", on_delete: :cascade
   add_foreign_key "credit_transactions", "users", column: "rejected_by_id"
-  add_foreign_key "credit_transactions", "users", on_delete: :cascade
   add_foreign_key "transactions", "accounts"
   add_foreign_key "transactions", "users"
 end
