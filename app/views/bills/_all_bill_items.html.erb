@@ -1,0 +1,39 @@
+<div class="card mx-5">
+  <div class="card-header h2 px-5">
+    Bill Items
+  </div>
+
+  <div class="table-responsive master-list px-5">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col" class="text-info h5 font-weight-bold">#</th>
+          <th scope="col" class="text-info h5 font-weight-bold">Product</th>
+          <th scope="col" class="text-info h5 font-weight-bold">HSN Code</th>
+          <th scope="col" class="text-info h5 font-weight-bold">CGST</th>
+          <th scope="col" class="text-info h5 font-weight-bold">SGST</th>
+          <th scope="col" class="text-info h5 font-weight-bold">IGST</th>
+          <th scope="col" class="text-info h5 font-weight-bold">Amount</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @bill_items.each.with_index(1) do |bill_item, index| %>
+          <tr>
+            <td scope="row"><%= index %></td>
+            <td><%= bill_item.product %></td>
+            <td><%= bill_item.hsn_code %></td>
+            <td><%= bill_item.cgst %></td>
+            <td><%= bill_item.sgst %></td>
+            <td><%= bill_item.igst %></td>
+            <td><%= bill_item.amount %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<br/>
+<div class="d-flex justify-content-center">
+  <%== pagy_bootstrap_nav(@pagy) %>
+</div>

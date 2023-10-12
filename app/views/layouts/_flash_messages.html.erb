@@ -1,0 +1,7 @@
+<div id='approve'>
+  <% flash.each do |key, value| %>
+    <div class="<%= flash_class(key) %> ">
+      <h4 align="center"><%= value %></h4>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,25 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: root
+  password: root
+  host: <%= ENV['DB_HOST'] || 'localhost' %>
+  socket: /var/run/mysqld/mysqld.sock
+  variables:
+    sql_mode: TRADITIONAL
+
+development:
+  <<: *default
+  database: expense_tracker_development
+  
+
+test:
+  <<: *default
+  database: expense_tracker_test
+
+production:
+  <<: *default
+  database: expense_tracker_production
+  username: expense_tracker
+  password: <%= ENV['EXPENSE_TRACKER_DATABASE_PASSWORD'] %>

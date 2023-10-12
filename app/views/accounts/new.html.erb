@@ -1,0 +1,13 @@
+<div class="formstyle">
+  <h2 align="center"><%= t(:add, name: "account") %></h2>
+  <%= form_for @account do |f| %>
+    <%= render 'form', f: f %>
+    <div class="form-group">
+      <div class="text-right">
+        <%= f.submit t(:create), name: 'create', class: "btn btn-primary", data: { disable_with: t(:creating) }  %>
+        <%= f.submit t(:create_and_add), name: 'create_and_add', class: "btn btn-primary", data: { disable_with: t(:creating) } %>
+        <%= link_to t(:cancel), :back, class:"btn btn-light btn-outline-dark" %>
+      </div>
+    </div>
+  <% end %>
+</div>

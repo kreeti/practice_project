@@ -1,0 +1,17 @@
+<div id="transaction-<%= @transaction.id %>-status">
+  <% unless @transaction.verified? %>
+    <p class="transaction-controls">
+      <%= link_to '', edit_transaction_path(@transaction), title: "Edit", class: "fa fa-pencil-square-o fa-2x" %>
+      <%= link_to '', @transaction, method: :delete, data: { confirm: t(:sure, name: "transaction") }, title: "Delete", class: "fa fa-trash fa-2x" %>
+    </p>
+    Pending for approval <br/>
+  <% end %>
+  <% if @transaction.approved_by.present? %>
+    <%= t('.approved_by') %>  <%= @transaction.user_approved_by.name + t('.preposition') %><%= l(@transaction.approved_at, format: :time_format) %>
+  <% elsif @transaction.rejection_reason.present? %>
+    <%= t('.rejected_by') %><%= @transaction.user_rejected_by.name + t('.preposition') %><%= l(@transaction.rejected_at, format: :time_format) %> </br> <%= t('.reason') %><%=  @transaction.rejection_reason %>
+  <% else %>
+    <%= link_to(t('.approve'), approve_transaction_path(@transaction), remote: true, method: :put) %> /
+    <%= link_to(t('.reject'), reject_transaction_transaction_path(@transaction), data: { remote_popup: true }) %>
+  <% end %>
+</div>

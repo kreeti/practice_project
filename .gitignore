@@ -1,0 +1,27 @@
+/.bundle
+
+/log/*
+!/log/.keep
+/tmp
+
+log/*.log
+tmp/
+tmp/**/*
+public/system/
+public/assets/
+public/photos/
+
+*.DS_Store
+config/database.yml
+config/secrets.yml
+db/dumpfile
+*~
+# files
+
+node_modules/
+
+/config/credentials/production.key
+
+/config/credentials/development.key
+
+/config/credentials/development.yml.enc

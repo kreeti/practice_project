@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%=t('.expense')%></title>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div>
+      <% if current_user.present? || session[:unverified_user_id].present? %>
+        <div class="navigation-bar">
+          <%= render 'layouts/navigation' unless session[:unverified_user_id].present? %>
+        </div>
+        <div class="body-content">
+          <%= render 'layouts/flash_messages' %>
+          <%= yield %>
+        </div>
+      <% else %>
+        <%= render 'layouts/sign_in' %>
+      <% end %>
+    </div>
+    <%= javascript_include_tag 'application' %>
+  </body>
+</html>

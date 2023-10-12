@@ -1,0 +1,33 @@
+<div>
+  <%= link_to "ET", root_path, title: "Expense Tracker", class:
+  "expense-header"%>
+  <ul class="list-unstyled navbar-list">
+    <li>
+      <%= link_to "", transactions_path, title: "Transaction", class: "fa fa-inr fa-2x" %>
+    </li>
+    <li>
+      <%= link_to "", accounts_path, title: "Accounts", class: "fa fa-address-book fa-2x" %>
+    </li>
+    <li>
+      <%= link_to "", reports_path, title: "Reports", class: "fa fa-bar-chart fa-2x" %>
+    </li>
+  </ul>
+</div>
+
+<ul class="list-unstyled navbar-list">
+  <li>
+    <%= link_to "", bills_path, title: "Bills", class: "fa fa-calculator fa-2x" %>
+  </li>
+  <li>
+    <%= link_to "", vendors_path, title: "Vendors", class: "fa fa-building fa-2x" %>
+  </li>
+  <% if current_user.admin? %>
+    <li>
+      <%= link_to "", users_path, title: "Users", class: "fa fa-users fa-2x" %>
+    </li>
+  <% end %>
+
+  <li>
+    <%= link_to "", signout_path, title: "Sign Out", class: "fa fa-sign-out fa-2x" %>
+  </li>
+</ul>

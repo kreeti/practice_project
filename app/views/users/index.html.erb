@@ -1,0 +1,31 @@
+<div class="head container">
+  <div class="row">
+    <h1 class="col-6"><%= t('.user') %></h1>
+    <div class="col-6 text-right">
+      <%= link_to t('.newuser'), new_user_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
+<div class="user container">
+  <table>
+    <tr>
+      <th><%=t('.id')%></th>
+      <th><%= t(:name)%></th>
+      <th><%= t('.email')%></th>
+      <th colspan="1"></th>
+    </tr>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td>
+          <%= link_to '', edit_user_path(user), method: 'get', title: "Edit", class: "fa fa-pencil-square-o fa-2x float-right" %>
+          <% if user != current_user %> 
+            <%= link_to "deactivate",user ,method: :delete, data: { confirm: "Are you sure?" },title: "deactivate" %> 
+          <% end %>
+        </td>
+      </tr>
+    <% end  %>
+  </table>
+</div>

@@ -1,0 +1,8 @@
+<% if URI(request.referer).path == '/transactions' %>
+  $("tr#transaction_<%= @transaction.id%>").replaceWith("<%= j render @transaction %>");
+<% else %>
+  $("p#transaction-<%= @transaction.id %>-status").replaceWith("<%= j render 'transaction_status' %>");
+<% end %>
+
+$("#approve").html('<h4 class="alert alert-success text-center">Transaction approved successfully</h4>');
+$('a[data-method="delete"]').hide();

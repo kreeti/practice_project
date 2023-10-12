@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="search">
+    <%= form_tag accounts_path, method: 'get', class: 'filter-form form-inline row' do %>
+      <div class="form-group col-lg-4 fromdate">
+        <label>From Date:</label>
+        <%= text_field_tag :from_date, @account_form.from_date, class: 'ml-2 form-control from-date', readonly: true %>
+      </div>
+      <div class="form-group col-lg-3 todate">
+        <label>To Date:</label>
+        <%= text_field_tag :to_date, @account_form.to_date, class: 'ml-2 form-control to-date', readonly: true %>
+      </div>
+      <div class="form-group col-lg-2">
+        <%= select_tag :account_id, options_for_select([['ALL', nil]] + Account.order_by_name.pluck(:name, :id), selected: params[:account_id]), class: 'time-interval form-control mx-auto' %>
+      </div>
+      <div class="form-group col-lg-3">
+        <%= submit_tag "<<", class: "btn btn-light btn-outline-dark", name: "previous" %>
+        <%= select_tag :time_interval, options_for_select( Transaction::TIME_INTERVAL, params[:time_interval]) , class:'mx-auto time-interval form-control' %>
+        <%= submit_tag ">>", class: "btn btn-light btn-outline-dark", name: "upcoming" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <h2 class="col-6"><%= t('.account') %> for <%= timespan_in_words(@account_form.time_interval_params, @account_form.from_date, @account_form.to_date) %></h2>
+    <div class="col-6 text-right">
+      <%= link_to t('.newaccount'), new_account_path, class: "btn btn-primary" %>
+      <%= link_to t('.list'), list_accounts_path, class: "account-list" %>
+    </div>
+  </div>
+
+  <div class="user">
+  <table>
+    <thead>
+      <tr class="text-center">
+        <th><%= t(:name) %></th>
+        <th><%= t('.totalnumber') %></th>
+        <th><%= t('.totalamountapproved') %></th>
+        <th><%= t('.totalamountpending') %></th>
+        <th><%= t('.totalamountrejected') %></th>
+        <th><%= t('.totalamount') %></th>
+        <th colspan="3"></th>
+      </tr>
+    <thead>
+    <tbody>
+      <% @account_form.accounts.each do |account| %>
+        <tr class="text-center">
+          <td><%= account["name"] %></td>
+          <td><%= link_to account["transaction_count"], transactions_path(account_id: account["account_id"], time_interval: @account_form.time_interval_params, to_date: @account_form.to_date, from_date: @account_form.from_date, current: true) %></td>
+          <td><%= number_to_currency(account["total_approved"], unit:" ") %></td>
+          <td><%= number_to_currency((account["total_transaction_amount"] - (account["total_rejected"] + account["total_approved"])), unit:" ") %></td>
+          <td><%= number_to_currency(account["total_rejected"], unit:" ") %></td>
+          <td><%= number_to_currency(account["total_transaction_amount"], unit:" ") %></td>
+          <td><%= link_to '', edit_account_path(account["account_id"]), title: "Edit",class: "fa fa-pencil-square-o fa-2x" %></td>
+          <td><%= link_to '', account_path(account["account_id"]), method: :delete, data: { confirm: t(:sure, name: "account") }, title: "Delete", class: "fa fa-trash fa-2x" %></td>
+          <td><%= link_to '', new_transaction_path(account_id: account["account_id"]), title: "Add Transaction", class: "fa fa-plus fa-1x text-success" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr class="text-center">
+        <th id="total">Total :</th>
+        <td><%= @account_form.total_number_of_transactions %></td>
+        <td><%= number_to_currency(@account_form.approved_transaction_total_amount, unit:" ") %></td>
+        <td><%= number_to_currency(@account_form.pending_transaction_total_amount, unit:" ") %></td>
+        <td><%= number_to_currency(@account_form.rejected_transaction_total_amount, unit:" ") %></td>
+        <td><%= number_to_currency(@account_form.transactions_total_amount, unit:" ") %></td>
+        <td colspan="3"></td>
+      </tr>
+    </tfoot>
+  </table>
+  </div>
+</div>

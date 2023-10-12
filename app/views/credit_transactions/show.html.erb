@@ -1,0 +1,30 @@
+<div class="container">
+  <%= link_to ' Back', transactions_path, class: "fa fa-arrow-left" %>
+  <div class="head">
+    <h2><%= t('.credit')%></h2>
+  </div>
+  <div class="row">
+    <div class="col-6 show-details">
+      <div class="row">
+        <div class="col-4">
+          <p><b><%= t('.id') %>:</b></p>
+          <p><b><%= t('.amount') %>:</b></p>
+          <p><b><%= t('.given_by') %>:</b></p>
+          <p><b><%= t('.given_to') %>:</b></p>
+          <p><b><%= t('.transaction_on') %>:</b></p>
+        </div>
+        <div class="col-8">
+          <p><%= @credit_transaction.id %></p> 
+          <p><%= @credit_transaction.amount %></p>
+          <p><%= @credit_transaction.user.name %></p>
+          <p><%= @credit_transaction.beneficiary_user.name_or_email %></p>
+          <p><%= l(@credit_transaction.transaction_on) if @credit_transaction.transaction_on %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-6 show-details">
+      <%= render 'credit_transaction_status' %>
+    </div>
+  </div>
+</div>

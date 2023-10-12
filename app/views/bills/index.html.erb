@@ -1,0 +1,69 @@
+<div class="head container py-4">
+  <div class="row clearfix">
+    <h1 class="col-3">Bills</h1>
+
+    <div id="bill-form" class="col-3 text-right">
+      [ <%= link_to "Export to CSV", bills_path(format: "csv", month: @month, year: @year) %> ]
+    </div>
+
+    <div id="bill-form" class="alr col-5 text-center">
+      <%= form_for :bill, html: {method: :get} do |f| %>
+        <span class="mx-2">Month: <%= month_select_tag %></span>
+        <span class="mx-2">Year: <%= year_select_tag %></span>
+        <span><%= f.submit "Go" %></span>
+      <% end %>
+    </div>
+
+    <div class="text-right">
+      <%= link_to "Add", new_bill_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
+
+<div class="bill container">
+  <table class="table">
+    <tr>
+      <th class="text-center">Id</th>
+      <th class="text-center">Vendor</th>
+      <th class="text-center">Reference Number</th>
+      <th class="text-center">Date</th>
+      <th class="text-center">Total CGST</th>
+      <th class="text-center">Total SGST</th>
+      <th class="text-center">Total IGST</th>
+      <th class="text-center">Total Amount</th>
+      <th class="text-center">Attachment</th>
+
+      <th colspan="2"></th>
+    </tr>
+
+    <% @bills.each do |bill| %>
+    <tr>
+      <td class="text-center"><%= link_to bill.id, bill_path(bill) %></td>
+      <td class="text-center"><%= bill.vendor.name %></td>
+      <td class="text-center"><%= bill.ref_no %></td>
+      <td class="text-center"><%= bill.date %></td>
+      <td class="text-center"><%= bill.total_cgst %></td>
+      <td class="text-center"><%= bill.total_sgst %></td>
+      <td class="text-center"><%= bill.total_igst %></td>
+      <td class="text-center"><%= bill.total_amount %></td>
+      <td class="text-center">
+        <% if bill.document.exists? %>
+          <%= link_to bill.document_file_name, bill.document.url, target: "_blank" %>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to '', edit_bill_path(bill), method: 'get', title: "Edit",
+        class: "fa fa-pencil-square-o fa-2x float-right" %>
+      </td>
+      <td>
+        <%= link_to '', bill, method: :delete, data: { confirm: t(:sure, name: "bill") }, title: "Delete", class: "fa fa-trash fa-2x float-right" %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+  <br />
+
+  <div class="d-flex justify-content-center">
+    <%== pagy_bootstrap_nav(@pagy) %>
+  </div>
+</div>

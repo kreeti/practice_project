@@ -1,0 +1,100 @@
+<div class="transaction-items container">
+  <div class="search">
+    <%= form_tag transactions_path,  method: 'get', class: 'form-inline row filter-form' do %>
+      <%= hidden_field_tag :account_id, params[:account_id] %>
+      <div class="form-group col-lg-4 fromdate">
+        <label><%= t(:fromdate) %></label>
+        <%= text_field_tag :from_date, @transaction_form.from_date, class: 'form-control from-date ml-1', readonly: true %>
+      </div>
+      <div class="form-group col-lg-3 todate">
+        <label><%= t(:todate) %></label>
+        <%= text_field_tag :to_date, @transaction_form.to_date, class: 'form-control to-date ml-1', readonly: true %>
+      </div>
+      <div class="form-group col-lg-2">
+        <%= select_tag :status, options_for_select(["Status"] + Transaction::STATUS.keys.collect{ |status| [status.to_s.humanize, status]}, selected: params[:status]), class:'time-interval form-control mx-auto' %>
+      </div>
+      <div class="form-group col-lg-3">
+        <%= submit_tag "<<", class: "btn btn-light btn-outline-dark", name: "previous" %>
+        <%= select_tag :time_interval, options_for_select( Transaction::TIME_INTERVAL, params[:time_interval]) , class:'mx-auto time-interval form-control' %>
+        <%= submit_tag ">>", class: "btn btn-light btn-outline-dark", name: "upcoming" %>
+      </div>
+    <% end %>
+  </div>
+
+  <h2 class = "d-inline-block">
+    <%= t('.details')%><%= timespan_in_words(@transaction_form.time_interval_params, @transaction_form.from_date, @transaction_form.to_date) %>
+  </h2>
+  <span class="balance-brought-forward">
+    [B/F: <%= number_to_currency(@balance_brought_forward, unit: " ") %>]
+  </span>
+
+  <div class="user transactions-list">
+    <div class="row">
+      <div class="transaction-column col-md-6">
+        <div>
+          <h3 class="float-left">
+            <% if @transaction_form.account.present? %>
+              <%= t('.expense_for') %><%= @transaction_form.account.name %>
+            <% else %>
+              <%= t('.expense') %>
+            <% end %>
+          </h3>
+          <%= link_to t('.add'), new_transaction_path, class: "btn btn-primary float-right" %>
+        </div>
+        <table class="table-border">
+          <thead>
+            <tr>
+              <th class="id-width"><%= t(:id) %></th>
+              <th class="date-width"><%= t('.date') %></th>
+              <th class="user-width">
+                <% if @transaction_form.account.present? %>
+                  <%= t('.description') %>
+                <% else %>
+                  <%= t('.accounts')%>
+                <% end %>
+              </th>
+              <th class="amount-width text-right"><%= t('.amount') %></th>
+              <th class="edit-width"></th>
+            </tr>
+          </thead>
+          <%= render @transactions %>
+        </table>
+      </div>
+      <div class="transaction-column col-md-6">
+        <div>
+          <h3 class="float-left"><%= t('.credit') %> </h3>
+          <%= link_to t('.add'), new_credit_transaction_path, class: "btn btn-primary float-right" %>
+        </div>
+        <div class="credit-transactions-list">
+          <table class="table-border">
+            <thead>
+              <tr>
+                <th class="id-width"><%= t(:id) %></th>
+                <th class="date-width"><%= t('.date') %></th>
+                <th class="user-width"><%= t('.given-to') %></th>
+                <th class="amount-width text-right"><%= t('.amount') %></th>
+                <th class="edit-width"></th>
+              </tr>
+            </thead>
+            <%= render @credit_transactions %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="balance-footer">
+    <div class="row balance-footer-row">
+      <div class="col-sm-4 text-center">
+        <span><strong>Total <%= t('.expense') %> :</strong> <%= number_to_currency(@transactions.total_transaction_amount, unit: " ")  %></span>
+      </div>
+      <div class="col-sm-4 text-center">
+        <span><strong>Total <%= t('.credit') %> :</strong> <span><%= number_to_currency(@credit_transaction_amount, unit: " ") %></span>
+      </div>
+      <div class="col-sm-4 text-center">
+        <span><strong><%= t('.net') %></strong></span>
+        <span><%= number_to_currency(@cash_in_hand, unit: " ") %></span>
+      </div>
+    </div>
+  </div>
+</div>

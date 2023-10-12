@@ -1,0 +1,86 @@
+en:
+  helpers:
+    approve: "Approve"
+
+  transactions:
+
+    show:
+      transaction: "Transaction For"
+      date: "Date"
+      description: "Description"
+      amount: "Amount"
+      bill: "Attachments"
+      status: "Status: "
+      approve: "Approve"
+      reject: "Reject"
+      at: " at "
+      approved_by: "Approved by: "
+      approved_on: "Approved on: "
+      preposition: " on "
+      rejected_by: "Rejected by: "
+      rejected_on: "Rejected on: "
+      rejection_reason: "Rejection reason: "
+      remove_confirmation: "Are you sure to remove this attachment?"
+      created_by: "Created by: "
+      preposition: " on "
+      reason: "Reason: "
+
+    reject_transaction:
+      reject_expense: "Reject Expense"
+      reason: "Reason: "
+      close: "Close"
+
+    index:
+      expense: "Expenses"
+      add: "Add"
+      id: "Id"
+      title: "Title"
+      date: "Date"
+      account: "Account : "
+      amount: "Amount (₹)"
+      approve: "Approve"
+      reject: "Reject"
+      attachments: "Attachments"
+      rejected_by: "Rejected by: "
+      approved_by: "Approved by: "
+      reason: "Reason: " 
+      destroy: "Destroy"
+      details: "Transactions for "
+      description: "Description "
+      given-to: "Given to"
+      credit: "Credits"
+      expense_for: "Expenses for "
+      net: "Cash In Hand (₹):"
+      
+    transaction:
+      approved_by: "Approved by: "
+      approved_on: "Approved on: "
+      rejected_by: "Rejected by: "
+      approved: "Approved"
+      rejected: "Rejected"
+      approve: "Approve"
+      reject: "Reject"
+      reason: "Reason: "
+      preposition: " on "
+      at: " at "
+            
+    form:
+      prohibit: "prohibit this expense from being saved"
+      back: "Back"
+      date: "Date: "
+      account: "Account: "
+      description: "Description: "
+      amount: "Amount: "
+      attachments: "Attachments: "
+      
+    approve:
+      approved_by: "Approved by: "
+
+    transaction_status:
+      approved_by: "Approved by: "
+      rejected_by: "Rejected by: "
+      approve: "Approve"
+      reject: "Reject"
+      reason: "Reason: "
+      preposition: " on "
+      at: " at "

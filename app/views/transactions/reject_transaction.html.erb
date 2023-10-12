@@ -1,0 +1,24 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title"><%= t('.reject_expense') %>
+        <span class="required required-top"><%= t('.reason') %></span>
+      </h4>
+    </div>
+    <%= form_for @transaction, url: { action: "reject" } do |f| %>
+      <div class="modal-body">
+        <div class="form-group">
+          <%= f.text_area :rejection_reason, class: "form-control", required: "true" %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="text-right">
+            <%= f.submit t('.reject_expense'), class: "btn btn-primary" %>
+            <%= link_to t('.close'), transactions_path, class: "btn btn-light btn-outline-dark" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

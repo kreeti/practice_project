@@ -1,0 +1,8 @@
+log/*.log
+tmp/
+tmp/**/*
+public/system/
+public/assets/
+public/photos/
+
+node_modules/

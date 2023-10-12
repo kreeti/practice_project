@@ -1,0 +1,47 @@
+<div class="head container">
+  <div class="row">
+    <h1 class="col-6">Vendors</h1>
+    <div class="col-6 text-right">
+      <%= link_to "Add", new_vendor_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+</div>
+
+<div class="vendor container">
+  <table>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Street</th>
+      <th>Street2</th>
+      <th>City</th>
+      <th>State</th>
+      <th>Country</th>
+      <th>GST_No</th>
+      <th>PAN_No</th>
+
+      <th colspan="2"></th>
+    </tr>
+
+    <% @vendors.each do |vendor| %>
+    <tr>
+      <td><%= vendor.id %></td>
+      <td><%= vendor.name %></td>
+      <td><%= vendor.street %></td>
+      <td><%= vendor.street2 %></td>
+      <td><%= vendor.city %></td>
+      <td><%= vendor.state %></td>
+      <td><%= vendor.country %></td>
+      <td><%= vendor.gst_no %></td>
+      <td><%= vendor.pan_no %></td>
+      <td>
+        <%= link_to '', edit_vendor_path(vendor), method: 'get', title: "Edit",
+        class: "fa fa-pencil-square-o fa-2x float-right" %>
+      </td>
+      <td>
+        <%= link_to '', vendor, method: :delete, data: { confirm: t(:sure, name: "vendor") }, title: "Delete", class: "fa fa-trash fa-2x float-right" %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

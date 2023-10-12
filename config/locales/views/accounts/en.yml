@@ -1,0 +1,30 @@
+en:
+  accounts:
+    list:
+      account: "Account"
+      id: "Id"
+      name: "Name"
+      destroy: "Destroy"
+      active: "Active"
+      inactive: "Inactive"
+      status: "Status"
+
+    index:
+      account: "Accounts"
+      newaccount: "Add"
+      add: "Transaction"
+      totalamount: "Total Amount (₹)"
+      destroy: "Destroy"
+      totalnumber: "Transaction Count"
+      totalamountapproved: "Approved Amount (₹)"
+      totalamountpending: "Pending Amount (₹)"
+      totalamountrejected: "Rejected Amount (₹)"
+      list: "Accounts list"
+
+    destroy:
+      success_delete_notice: "Account deleted successfully"
+
+    form:
+      prohibit: "prohibited this account from being saved"
+      name: "Name: "
+      active: "Active"

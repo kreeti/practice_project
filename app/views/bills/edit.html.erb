@@ -1,0 +1,13 @@
+<div class="bill-form">
+  <h2 align="center"><%= t(:edit, name: "bill")  %></h2>
+  <%= render 'shared/errors', object: @bill %>
+  <%= form_for @bill do |f| %>
+    <%= render 'form', f: f %>
+    <div class="form-group">
+      <div class="text-right">
+        <%= link_to t(:cancel), :back, class: "btn btn-light btn-outline-dark" %>
+        <%= f.submit t(:update), class: "btn btn-primary",  data: { disable_with: t(:updating) } %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,12 @@
+en:
+  layouts:
+    application:
+      expense: "Expense Tracker"
+    navigation:
+      expense: "Expense Tracker"
+      transaction: "Transactions"
+      accounts: "Accounts"
+      users: "Users"
+      signout: "Sign Out"
+    sign_in:
+      signingoogle: "Sign in with Google"

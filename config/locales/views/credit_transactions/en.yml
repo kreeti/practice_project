@@ -1,0 +1,36 @@
+en: 
+  credit_transactions:
+    
+    show:
+      credit: "Credit Transaction"
+      id: "id"
+      amount: "amount"
+      user: "user"
+      given_to: "Given To"
+      given_by: "Given By"
+      transaction_on: "Transaction on"
+      
+    form:
+      transaction_on: "transaction on"
+    
+    credit_transaction:
+      given-by: "Given By: "
+      given-to: "Given To: "
+      approve: "Approve"
+      reject: "Reject"
+      approved: "Approved"
+      rejected: "Rejected"
+
+    reject_transaction:
+      reject_expense: "Reject Expense"
+      reason: "Reason: "
+      close: "Close"
+
+    credit_transaction_status:
+      approved_by: "Approved by: "
+      rejected_by: "Rejected by: "
+      approve: "Approve"
+      reject: "Reject"
+      reason: "Reason: "
+      preposition: " on "
+      at: " at "
